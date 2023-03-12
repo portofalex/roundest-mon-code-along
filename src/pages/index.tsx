@@ -3,6 +3,7 @@ import { getOptionsForVote } from '@/utils/getRandomPokemon';
 import { trpc } from '@/utils/trpc';
 import { useState } from 'react';
 import Image from 'next/image';
+import Loading from '@/components/Loading';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,13 +33,19 @@ export default function Home() {
       <div className="p-2"></div>
       <div className="border rounded p-8 flex justify-between items-center w-[800px] h-[400px]">
         <div className="w-1/2 flex flex-col items-center gap-2 mb-8">
-          <Image
-            width="640"
-            height="640"
-            src={pokemonOne.data?.sprites.front_default ?? ''}
-            alt={`Sprite of ${pokemonOne.data?.name}`}
-          />
-          <div className="text-xl text-center capitalize mt-[-2rem]">
+          {!pokemonOne.isLoading && pokemonOne.data ? (
+            <Image
+              width="640"
+              height="640"
+              src={pokemonOne.data?.sprites.front_default ?? ''}
+              alt={`Sprite of ${pokemonOne.data?.name}`}
+            />
+          ) : (
+            <div className="w-full h-[306.16px] flex justify-center items-center">
+              <Loading />
+            </div>
+          )}
+          <div className="h-[28px] w-full text-xl text-center capitalize mt-[-2rem]">
             {pokemonOne.data?.name}
           </div>
           <button
@@ -50,13 +57,19 @@ export default function Home() {
         </div>
         <div className="text-4xl font-bold p-8">Vs</div>
         <div className="w-1/2 flex flex-col items-center gap-2 mb-8">
-          <Image
-            width="640"
-            height="640"
-            src={pokemonTwo.data?.sprites.front_default ?? ''}
-            alt={`Sprite of ${pokemonTwo.data?.name}`}
-          />
-          <div className="text-xl text-center capitalize mt-[-2rem]">
+          {!pokemonTwo.isLoading && pokemonTwo.data ? (
+            <Image
+              width="640"
+              height="640"
+              src={pokemonTwo.data?.sprites.front_default ?? ''}
+              alt={`Sprite of ${pokemonTwo.data?.name}`}
+            />
+          ) : (
+            <div className="w-full h-[306.16px] flex justify-center items-center">
+              <Loading />
+            </div>
+          )}
+          <div className="h-[28px] w-full text-xl text-center capitalize mt-[-2rem]">
             {pokemonTwo.data?.name}
           </div>
           <button
